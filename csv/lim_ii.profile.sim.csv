@@ -1,0 +1,30 @@
+version 1   
+Id          ;SimIp    ;SimPort;SimUnit
+inv_11_1    ;localhost;5020   ;1      
+inv_11_2    ;localhost;5021   ;1      
+inv_12_1    ;localhost;5022   ;1      
+inv_12_2    ;localhost;5023   ;1      
+inv_13_1    ;localhost;5024   ;1      
+inv_13_2    ;localhost;5025   ;1      
+inv_14_1    ;localhost;5026   ;1      
+inv_14_2    ;localhost;5027   ;1      
+inv_21_1    ;localhost;5028   ;1      
+inv_21_2    ;localhost;5029   ;1      
+inv_22_1    ;localhost;5030   ;1      
+inv_22_2    ;localhost;5031   ;1      
+inv_23_1    ;localhost;5032   ;1      
+inv_23_2    ;localhost;5033   ;1      
+e1240_12    ;localhost;5034   ;1      
+e1240_23    ;localhost;5035   ;1      
+e1210_11    ;localhost;5036   ;1      
+e1210_12    ;localhost;5037   ;1      
+e1210_13    ;localhost;5038   ;1      
+e1210_14    ;localhost;5039   ;1      
+e1210_21    ;localhost;5040   ;1      
+e1210_22    ;localhost;5041   ;1      
+e1210_23    ;localhost;5042   ;1      
+ups_sms     ;localhost;5043   ;1      
+ppc         ;localhost;5044   ;1      
+mv_scada    ;localhost;5045   ;1      
+rmu_meter_23;localhost;5046   ;1      
+rmu_meter_11;localhost;5047   ;1      

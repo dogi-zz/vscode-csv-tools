@@ -1,65 +1,54 @@
 import * as vscode from 'vscode';
-import { JsonSyntaxTree } from './json/json_types';
-import { JsonExtension } from './extension/json-extension';
+import { CsvExtension } from './extension/csv-extension';
 
 const fs = require('fs');
 
 export function activate(context: vscode.ExtensionContext) {
-	console.log('Congratulations, your extension "o-scad" is now active!');
+	console.log('Congratulations, your extension "dogi-scsv" is now active!');
 
-	const jsonExtension = new JsonExtension();
+	const csvExtension = new CsvExtension();
 
-	let disposable = vscode.commands.registerCommand('extension.helloWorld', () => {
-		vscode.window.showInformationMessage("hello json");
+	let disposable1 = vscode.commands.registerCommand('dogi-scsv.unformat', (...args: any[]) => {
+		if (vscode.window.activeTextEditor) {
+			let document = vscode.window.activeTextEditor.document;
+	
+			let compressedCode = csvExtension.compress(document.getText());
+
+			let fullRange = new vscode.Range(document.positionAt(0), document.positionAt(document.getText().length));
+			vscode.window.activeTextEditor.edit(edit => edit.replace(fullRange, <string>compressedCode));
+		}
 	});
 
-	context.subscriptions.push(disposable);
+	let disposable2 = vscode.commands.registerCommand('dogi-scsv.shrink', (...args: any[]) => {
+		if (vscode.window.activeTextEditor) {
+			let document = vscode.window.activeTextEditor.document;
+	
+			let compressedCode = csvExtension.compress(document.getText());
+			let formatetCode = csvExtension.format(compressedCode);
+
+			let fullRange = new vscode.Range(document.positionAt(0), document.positionAt(document.getText().length));
+			vscode.window.activeTextEditor.edit(edit => edit.replace(fullRange, <string>formatetCode));
+		}
+	});
+
+	context.subscriptions.push(disposable1);
+	context.subscriptions.push(disposable2);
 
 
 	// ============================		
 	// ==== FORMATTER =============
 	// ============================
 
-	vscode.languages.registerDocumentFormattingEditProvider({ scheme: 'file', language: 'json' }, {
+	vscode.languages.registerDocumentFormattingEditProvider({ scheme: 'file', language: 'scsv' }, {
 		provideDocumentFormattingEdits(document: vscode.TextDocument): vscode.TextEdit[] {
-			let tokens: JsonSyntaxTree;
-			let parseTime = 0;
-			let formatTime = 0;
-			try {
-				let start = new Date().getTime();
-				tokens = jsonExtension.parse(document.getText());
-				parseTime = new Date().getTime() - start;
-			} catch (e) {
-				console.error(e);
-				vscode.window.showInformationMessage("Parse Error" + e);
-				return [];
-			}
-			try {
-				let start = new Date().getTime();
-				let formatetCode = jsonExtension.format(tokens);
-				formatTime = new Date().getTime() - start;
-				if (formatetCode === null) {
-					vscode.window.showInformationMessage("error while format: empty result");
-					return [];
-				} else {
-					let fullRange = new vscode.Range(document.positionAt(0), document.positionAt(document.getText().length));
-					vscode.window.showInformationMessage('SCAD parse time: ' + parseTime + 'ms, format time: ' + formatTime + 'ms');
-					return [
-						vscode.TextEdit.replace(fullRange, formatetCode)
-					];
-				}
-			} catch (e) {
-				console.error(e);
-				vscode.window.showInformationMessage("error while format:" + e);
-				return [];
-			}
+
+			let formatetCode = csvExtension.format(document.getText());
+			let fullRange = new vscode.Range(document.positionAt(0), document.positionAt(document.getText().length));
+			return [
+				vscode.TextEdit.replace(fullRange, formatetCode)
+			];
 		}
 	});
-
-	// ==========================		
-	// ==== COMANDS =============
-	// ==========================
-
 
 }
 

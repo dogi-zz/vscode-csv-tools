@@ -1,0 +1,26 @@
+{
+  "scopeName": "source.scsv",
+  "patterns": [
+    { "include": "#expression-column" }
+  ],
+  "repository": {
+
+    "expression-column": {
+      "match": "([^;]*)(([;])([^;]*))",
+      "captures" : {
+        "1" : { "name": "string.unquoted" },
+        "3" : { "name": "entity.name.function" },
+        "4" : { "name": "string.unquoted" }
+      }
+    },
+
+    "expression-rest": {
+      "match": "(.*?)",
+      "captures" : {
+        "1" : { "name": "string.unquoted" }
+      }
+    }
+    
+  }
+
+}
